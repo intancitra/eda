@@ -1,0 +1,53 @@
+setwd("E:/AED")
+
+book=read.table("E:/AED/bestsellers with categories.csv",header=TRUE,sep=',',quote='"')
+n=nrow(book);n
+n_fic=0
+n_nfic=0
+for(i in 1:n){
+  if(book$Genre[i]=="Fiction") n_fic=n_fic+1
+  else n_nfic=n_nfic+1
+}
+
+fic=matrix(c(n_fic,n_nfic),ncol=2,nrow=1)
+colnames(fic)=c("Fiction","Non Fiction")
+
+pie(fic,
+    main = 'Pie Chart Genre Buku Best-Seller di Amazon',
+    labels = colnames(fic), 
+    radius = 0.8, 
+    clockwise = TRUE, 
+    col = c("#2A4747","#ABDAFC"))
+legend('bottomleft', 
+       legend = colnames(fic),
+       fill = c("#2A4747","#ABDAFC"))
+
+hist(book$User.Rating, main = 'Distribusi Review Buku Best-Seller di Amazon', 
+     xlab = 'Review')
+
+Reviews=matrix(rep(0,8),nrow=8,ncol=1)
+rownames(Reviews)=c("<=500","<=1000","<=3000","<=5000","<=8000","<=10000","<=15000",">15000")
+
+#Counting Banyak Review
+for(i in 1:n){
+  if(book$Reviews[i]<=500) {Reviews[1]=Reviews[1]+1}
+  else if(book$Reviews[i]<=1000) {Reviews[2]=Reviews[2]+1}
+  else if(book$Reviews[i]<=3000) {Reviews[3]=Reviews[3]+1}
+  else if(book$Reviews[i]<=5000) {Reviews[4]=Reviews[4]+1}
+  else if(book$Reviews[i]<=8000) {Reviews[5]=Reviews[5]+1}
+  else if(book$Reviews[i]<=10000) {Reviews[6]=Reviews[6]+1}
+  else if(book$Reviews[i]<=15000) {Reviews[7]=Reviews[7]+1}
+  else {Reviews[8]=Reviews[8]+1}
+}
+
+bar = barplot(height = Reviews,
+              names = rownames(Reviews),
+              xlab = 'Banyak Review',
+              col = c("#35524A","#627C85","#779CAB","#A2E8DD","#32DE8A","#D7EBBA","#FEFFBE","#EBD494"),
+              border = FALSE,
+              ylim = range(0, 200),beside=TRUE)
+
+text(x = bar,
+     y = Reviews+10,
+     labels = Reviews
+)

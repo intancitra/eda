@@ -1,0 +1,44 @@
+setwd('E:/AED')
+
+data=read.table('E:/AED/bestsellers with categories.csv',header=TRUE,sep=',',quote='"')
+
+data_2017=data[data$Year==2017,]
+
+windowsFonts(A = windowsFont("Metropolis")) 
+
+#Membuat BoxPlot
+{boxplot(data_2017$User.Rating~data_2017$Genre, 
+        main=expression(bold("2017 User Rating Genre-Based")), 
+        xlab="", ylab="", yaxt='n',
+        frame.plot=F,
+        col=c("#003566","#ffc300"),
+        col.axis='#001d3d',col.main='#3d405b', cex.main=1.6, family="A", ylim=c(4.2,5),
+        cex.axis=1.2,horizontal=TRUE)
+
+legend("bottomleft", legend = c("Non Fiction","Fiction"),
+       fill = c("#ffc300","#003566"),
+       inset = c(0.03, 0.05),
+       bg = "white",cex=0.8)
+
+title(xlab=expression(bold("User Rating")), line=3, col.lab="#001d3d", family="A", 
+      cex.lab=1.5)
+}
+
+#Membuat Scatterplot
+{plot(data_2017$Reviews,data_2017$Price,
+     ylab=expression(bold("Price($)")),xlab=expression(bold("Total Reviews")),xaxt='n',main="Books Price and Reviews Plot",
+     col=ifelse(data_2017$Genre=="Fiction","#003566","#ffc300"), cex.lab=1.2,
+     pch=15, frame.plot=FALSE, col.axis='#001d3d',col.main='#3d405b', col.lab='#3d405b', cex.main=1.6, family="A")
+
+axis(1, col = '#001d3d', col.axis= '#001d3d', cex.axis = 1, 
+     at = seq(5000, 30000, 5000),
+     labels = c('5k', '10k', '15k', '20k', '25k','30k'), family='A',las=1)
+
+legend(x=20000,y=40,legend = c("Non Fiction","Fiction"),
+       fill = c("#ffc300","#003566"),
+       inset = c(0.03, 0.05),
+       bg = "white",cex=1)
+
+mtext(expression(bold('Year : 2017')), side=3, at=1, adj=-1.8, cex=1, line = 0,
+      family = 'A', col = '#3d405b')
+}

@@ -1,0 +1,286 @@
+R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> packages = c('rcompanion', 'vcd', 'psych', 'DescTools', 'epitools', 'reshape2', 'dplyr', 'maditr')
+> # ukuran asosiasi
+> if(!require(rcompanion)){install.packages("rcompanion")}
+Loading required package: rcompanion
+Warning message:
+package ‘rcompanion’ was built under R version 4.0.4 
+> if(!require(vcd)){install.packages("vcd")}
+Loading required package: vcd
+Loading required package: grid
+Warning message:
+package ‘vcd’ was built under R version 4.0.4 
+> if(!require(psych)){install.packages("psych")}
+Loading required package: psych
+
+Attaching package: ‘psych’
+
+The following object is masked from ‘package:rcompanion’:
+
+    phi
+
+Warning message:
+package ‘psych’ was built under R version 4.0.4 
+> if(!require(DescTools)){install.packages("DescTools")}
+Loading required package: DescTools
+
+Attaching package: ‘DescTools’
+
+The following objects are masked from ‘package:psych’:
+
+    AUC, ICC, SD
+
+Warning message:
+package ‘DescTools’ was built under R version 4.0.4 
+> if(!require(epitools)){install.packages("epitools")}
+Loading required package: epitools
+
+Attaching package: ‘epitools’
+
+The following object is masked from ‘package:vcd’:
+
+    oddsratio
+
+Warning message:
+package ‘epitools’ was built under R version 4.0.3 
+> 
+> # manipulasi data
+> # bikin tabel kontingensi
+> if(!require(reshape2)){install.packages("reshape2")}
+Loading required package: reshape2
+Warning message:
+package ‘reshape2’ was built under R version 4.0.4 
+> if(!require(dplyr)){install.packages("dplyr")}
+Loading required package: dplyr
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Warning message:
+package ‘dplyr’ was built under R version 4.0.4 
+> if(!require(maditr)){install.packages("maditr")}
+Loading required package: maditr
+
+To get total summary skip 'by' argument: take_all(mtcars, mean)
+
+
+Attaching package: ‘maditr’
+
+The following objects are masked from ‘package:dplyr’:
+
+    between, coalesce, first, last
+
+The following objects are masked from ‘package:reshape2’:
+
+    dcast, melt
+
+The following object is masked from ‘package:DescTools’:
+
+    %like%
+
+Warning message:
+package ‘maditr’ was built under R version 4.0.4 
+> 
+> packages = c('rcompanion', 'vcd', 'psych', 'DescTools', 'epitools', 'reshape2', 'dplyr', 'maditr')
+> lapply(packages, library, character.only = TRUE)
+[[1]]
+ [1] "maditr"     "dplyr"      "reshape2"   "epitools"   "DescTools"  "psych"      "vcd"       
+ [8] "grid"       "rcompanion" "stats"      "graphics"   "grDevices"  "utils"      "datasets"  
+[15] "methods"    "base"      
+
+[[2]]
+ [1] "maditr"     "dplyr"      "reshape2"   "epitools"   "DescTools"  "psych"      "vcd"       
+ [8] "grid"       "rcompanion" "stats"      "graphics"   "grDevices"  "utils"      "datasets"  
+[15] "methods"    "base"      
+
+[[3]]
+ [1] "maditr"     "dplyr"      "reshape2"   "epitools"   "DescTools"  "psych"      "vcd"       
+ [8] "grid"       "rcompanion" "stats"      "graphics"   "grDevices"  "utils"      "datasets"  
+[15] "methods"    "base"      
+
+[[4]]
+ [1] "maditr"     "dplyr"      "reshape2"   "epitools"   "DescTools"  "psych"      "vcd"       
+ [8] "grid"       "rcompanion" "stats"      "graphics"   "grDevices"  "utils"      "datasets"  
+[15] "methods"    "base"      
+
+[[5]]
+ [1] "maditr"     "dplyr"      "reshape2"   "epitools"   "DescTools"  "psych"      "vcd"       
+ [8] "grid"       "rcompanion" "stats"      "graphics"   "grDevices"  "utils"      "datasets"  
+[15] "methods"    "base"      
+
+[[6]]
+ [1] "maditr"     "dplyr"      "reshape2"   "epitools"   "DescTools"  "psych"      "vcd"       
+ [8] "grid"       "rcompanion" "stats"      "graphics"   "grDevices"  "utils"      "datasets"  
+[15] "methods"    "base"      
+
+[[7]]
+ [1] "maditr"     "dplyr"      "reshape2"   "epitools"   "DescTools"  "psych"      "vcd"       
+ [8] "grid"       "rcompanion" "stats"      "graphics"   "grDevices"  "utils"      "datasets"  
+[15] "methods"    "base"      
+
+[[8]]
+ [1] "maditr"     "dplyr"      "reshape2"   "epitools"   "DescTools"  "psych"      "vcd"       
+ [8] "grid"       "rcompanion" "stats"      "graphics"   "grDevices"  "utils"      "datasets"  
+[15] "methods"    "base"      
+
+> 
+> setwd('E:/AED')
+> library(readxl)
+Warning message:
+package ‘readxl’ was built under R version 4.0.4 
+> 
+> data=read_excel('E:/AED/mtcarss2.xlsx')
+New names:
+* `` -> ...1
+> mtcars2 <- within(data, {
++   vs <- factor(vs, labels = c("V", "S"))
++   am <- factor(am, labels = c("automatic", "manual"))
++   cyl  <- ordered(cyl)
++   gear <- ordered(gear)
++   carb <- ordered(carb)
++ }) 
+> 
+> df_coba= mtcars2 %>%
++   group_by(am,vs) %>%
++ head(mtcars2)
+Error in checkHT(n, d <- dim(x)) : 
+  invalid 'n' - length(n) must be <= length(dim(x)), got 12 > 2
+> summary(mtcars2)
+     ...1                mpg        cyl         disp             hp             drat      
+ Length:32          Min.   :10.40   4:11   Min.   : 71.1   Min.   : 52.0   Min.   :2.760  
+ Class :character   1st Qu.:15.43   6: 7   1st Qu.:120.8   1st Qu.: 96.5   1st Qu.:3.080  
+ Mode  :character   Median :19.20   8:14   Median :196.3   Median :123.0   Median :3.695  
+                    Mean   :20.09          Mean   :230.7   Mean   :146.7   Mean   :3.597  
+                    3rd Qu.:22.80          3rd Qu.:326.0   3rd Qu.:180.0   3rd Qu.:3.920  
+                    Max.   :33.90          Max.   :472.0   Max.   :335.0   Max.   :4.930  
+       wt             qsec       vs             am     gear   carb  
+ Min.   :1.513   Min.   :14.50   V:14   automatic:19   3:15   1: 7  
+ 1st Qu.:2.581   1st Qu.:16.89   S:18   manual   :13   4:12   2:10  
+ Median :3.325   Median :17.71                         5: 5   3: 3  
+ Mean   :3.217   Mean   :17.85                                4:10  
+ 3rd Qu.:3.610   3rd Qu.:18.90                                6: 1  
+ Max.   :5.424   Max.   :22.90                                8: 1  
+> 
+> quantile(mtcars2$disp, probs = 0.25)
+    25% 
+120.825 
+> data = dcast(data, am ~ vs, value.var='jumlah')
+Error in value_vars(value.var, names(data)) : 
+  value.var values [jumlah] are not found in 'data'.
+> data
+# A tibble: 32 x 12
+   ...1                mpg   cyl  disp    hp  drat    wt  qsec vs    am         gear  carb
+   <chr>             <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <chr> <chr>     <dbl> <dbl>
+ 1 Mazda RX4          21       6  160    110  3.9   2.62  16.5 V     manual        4     4
+ 2 Mazda RX4 Wag      21       6  160    110  3.9   2.88  17.0 V     manual        4     4
+ 3 Datsun 710         22.8     4  108     93  3.85  2.32  18.6 S     manual        4     1
+ 4 Hornet 4 Drive     21.4     6  258    110  3.08  3.22  19.4 S     automatic     3     1
+ 5 Hornet Sportabout  18.7     8  360    175  3.15  3.44  17.0 V     automatic     3     2
+ 6 Valiant            18.1     6  225    105  2.76  3.46  20.2 S     automatic     3     1
+ 7 Duster 360         14.3     8  360    245  3.21  3.57  15.8 V     automatic     3     4
+ 8 Merc 240D          24.4     4  147.    62  3.69  3.19  20   S     automatic     4     2
+ 9 Merc 230           22.8     4  141.    95  3.92  3.15  22.9 S     automatic     4     2
+10 Merc 280           19.2     6  168.   123  3.92  3.44  18.3 S     automatic     4     4
+# ... with 22 more rows
+> data2 = dcast(data, am ~ vs, value.var='jumlah')
+Error in value_vars(value.var, names(data)) : 
+  value.var values [jumlah] are not found in 'data'.
+> data2 = mtcars2 %>%
++   group_by(am, vs) %>%
++   summarise(jumlah = n())
+`summarise()` has grouped output by 'am'. You can override using the `.groups` argument.
+> data2 = dcast(data2, am ~ vs, value.var='jumlah')
+> data2
+          am V  S
+1: automatic 7 12
+2:    manual 7  6
+> data_matrix = data.matrix(data2[ ,2:3])
+> data_matrix
+     V  S
+[1,] 7 12
+[2,] 7  6
+> # dari library psych
+> phi(data_matrix, digits = 4)
+[1] -0.1683
+> 
+> # dari library DescTools
+> # DescTools always produces a positive value.
+> Phi(data_matrix)
+[1] 0.1683451
+> 
+> cramerV(data_matrix, digits = 4)
+Cramer V 
+  0.1683 
+> 
+> assocstats(data_matrix)
+                     X^2 df P(> X^2)
+Likelihood Ratio 0.90710  1  0.34088
+Pearson          0.90688  1  0.34094
+
+Phi-Coefficient   : 0.168 
+Contingency Coeff.: 0.166 
+Cramer's V        : 0.168 
+> 
+> data_hist = matrix(c(table(mtcars2$am), table(mtcars2$vs)), nrow = 2)
+> rownames(data_hist) <- c('Automatic', 'Manual')
+> colnames(data_hist) <- c('V-shaped', 'Straight')
+> data_hist
+          V-shaped Straight
+Automatic       19       14
+Manual          13       18
+> 
+> barplot(data_hist,
++         main = 'Stacked Barplot Engine & Transmission',
++         col=c('#184E77','#1A759F'), 
++         border="white", 
++         xlab="Machine",
++         ylim = c(0, 35),
++         legend = rownames(data_hist))
+> 
+> barplot(data_hist,
++         main = 'Grouped Barplot Engine & Transmission',
++         col=c('#184E77','#1A759F'), 
++         border="white",
++         xlab="Machine",
++         legend = rownames(data_hist),
++         beside = T,
++         ylim = c(0, 20))
+> 
+> plot(mtcars2$drat, mtcars2$wt, col='#184E77', pch=19,
++      main = "Scatterplot of drat vs wt",
++      xlab = "Rear axle ratio",
++      ylab = "Weight (1000 lbs)",
++      cex.axis = 1)
+> mtext(paste0('Korelasi = ', round(cor(mtcars2$drat, mtcars2$wt), digits = 2)), adj = .75, line = -7)
+> 
+> pairs.panels(mtcars2[,c(3:7)], 
++              method = 'pearson', # correlation method
++              hist.col = '#34A0A4',
++              density = TRUE,  # show density plots
++              ellipses = TRUE, # show correlation ellipses
++              main = 'Pair plot of disp, hp, drat, wt, qsec')
+> 
