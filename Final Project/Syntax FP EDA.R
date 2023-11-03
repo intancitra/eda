@@ -1,0 +1,129 @@
+library(ggplot2)
+library(dplyr)
+library(corrgram)
+library(ggthemes)
+library(plyr)
+library(RColorBrewer)
+
+#Import Data
+df3 = read.table("E:/AED/Stars.csv",sep=',',header=T)
+
+#Buat Tema
+
+theme_star = function(){
+ theme(plot.title = element_text(size=24, face='bold'),
+ plot.subtitle = element_text(size=18, face='italic'),
+ plot.caption = element_text(size=10, face='italic', colour='grey50'),
+ axis.title.x = element_text(size = 10, face = 'bold', vjust = 0),
+ axis.text.x = element_text(size = 8, color= 'grey50'),
+ axis.title.y = element_text(size = 10, face = 'bold', vjust = 1),
+ axis.text.y = element_text(size = 8, color= 'grey50'),
+ axis.ticks = element_line(linetype=3),
+ panel.grid.major = element_blank(),
+ panel.grid.minor = element_blank(),
+ panel.grid.major.y = element_line(colour = 'grey75'),
+ panel.grid.major.x = element_line(colour = 'grey75'),
+ panel.border = element_blank(),
+ panel.background = element_blank())
+}
+
+#Cleaning Data
+
+data = df3 %>%
+ within({
+ Spectral_Class=factor(Spectral_Class)
+ Type=factor(Type)})
+df = df3$Color
+df= mapvalues(df, from = c("Blue white", "Blue White", "Blue-white", "white","yellowish"
+), to = c('Blue-White','Blue-White','Blue-White','White','Yellowish'))
+df = as.factor(df)
+df=data.frame(df)
+data2=cbind(data,df)
+data$Color= mapvalues(data$Color, from = c("Blue white", "Blue White", "Blue-white",
+"white","yellowish" ), to = c('Blue-White','Blue-White','Blue-White','White','Yellowish'))
+data$Color= mapvalues(data$Color, from = c("Red", "Blue-White", "White", "Yellowish",
+"Whitish", "Pale yellow orange"), to = c("12","2","4","7","3","9"))
+data$Color= mapvalues(data$Color, from = c("Yellowish White", "yellow-white", "Blue",
+"Orange"), to = c("5","6","1","10"))
+data$Color= mapvalues(data$Color, from = c("White-Yellow", "Orange-Red"), to =
+c("8","11"))
+data_2= data %>%
+ mutate(Colour=as.numeric(Color))
+
+#Korelasi Keseluruhan Faktor
+
+corrgram(data_2 %>% select(where(is.numeric)), order=TRUE,
+ upper.panel=panel.cor, main="Star Type Classification")
+
+#Perbandingan Tiap variabel Numerik dengan Star Type
+
+data_2 %>%
+ ggplot(aes(x=Type, y=A_M, fill=Type)) + geom_boxplot(alpha=0.7) +
+ labs(title="2021 NASA Stars Classification",
+ subtitle="Star Magnitude by Type",
+ x = "Star Type",
+ y = "Absolute Magnitude") + theme_star() +
+ theme_base()
+
+data_2 %>%
+ ggplot(aes(x=Type, y=Temperature, fill=Type)) + geom_boxplot(alpha=0.7) +
+ labs(title="2021 NASA Stars Classification",
+ subtitle="Star's Temperature by Type",
+ x = "Star Type",
+ y = "Temperature (K)") + theme_star() +
+ theme_base()
+
+data_2 %>%
+ ggplot(aes(x=Type, y=L/100000, fill=Type)) + geom_boxplot(alpha=0.7) +
+ labs(title="2021 NASA Stars Classification",
+ subtitle="Star's Luminosity by Type",
+ x = "Star Type",
+ y = "Luminosity (10^5)") + theme_star() +
+ theme_base()
+
+data_2 %>%
+ ggplot(aes(x=Type, y=R/1000, fill=Type)) + geom_boxplot(alpha=0.7) +
+ labs(title="2021 NASA Stars Classification",
+ subtitle="Star's Radius by Type",
+ x = "Star Type",
+ y = "Radius (10^3)") + theme_star() +
+ theme_base()
+
+#Perbandingan Variabel Nominal dengan Star Type
+
+data_2 %>%
+ ggplot(aes(Type, Spectral_Class, color=Spectral_Class)) + geom_count(alpha=0.5) +
+ scale_size(range=c(5,15)) + theme_star() +
+ labs(title="Count Plot for Type by Spectral Class",
+ subtitle="Star Type Classification",
+ caption="Data from Kaggle",
+ x="Star Type",
+ y="Spectral Class",
+ color="Spectral Class",
+ size="Count") +
+ theme(legend.key.size = unit(0.2, 'cm'))
+
+data2 %>%
+ ggplot(aes(Type, df, color=df)) + geom_count(alpha=0.5) +
+ scale_size(range=c(1,12)) + theme_star() +
+ labs(title="Count Plot for Type by Color",
+ subtitle="Star Type Classification",
+ caption="Data from Kaggle",
+ x="Star Type",
+ y="Color",
+ color="Color",
+ size="Count") +
+ theme(legend.key.size = unit(0.2, 'cm'))
+
+#Bubble Plot
+
+data_2 %>%
+ ggplot(aes(x = A_M, y = L/10000, size = Temperature, color=Type)) +
+ geom_point(alpha = 0.33, position = 'jitter') +
+ labs(title= "Star Type Classification",
+ subtitle= "NASA",
+ x = 'Magnitude',
+ y = 'Luminousity (10^5)') +
+ scale_size(range = c(.5, 10)) +
+ theme(legend.key.size = unit(0.3, 'cm'), legend.title = element_text(face='bold')) +
+ theme_hc(style='darkunica') + scale_colour_hc('darkunica') + theme_star()
